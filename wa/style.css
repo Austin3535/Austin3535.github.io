@@ -64,11 +64,11 @@ body {
     width: 35em;
     height: 22em;
     margin: 5em auto;
-    background-color: #F7DC6F; /* bright yellow */
-    border: 0.2em solid #000; /* black border */
+    background-color: #F7DC6F;
+    border: 0.2em solid #000;
     border-radius: 1.5em;
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
-    overflow: hidden; /* Add this to prevent gradient bleed */
+    overflow: hidden;
   }
   
  .pim-card header {
@@ -87,35 +87,35 @@ body {
   
  .pim-card h2,.pim-card p {
     margin: 0;
-    font-family: 'Comic Sans MS', cursive; /* Pim's signature font */
+    font-family: 'Comic Sans MS', cursive;
   }
   
  .pim-card article {
     height: 9em;
-    background-color: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.5); 
     padding: 1.25em;
   }
   
  .pim-card article img {
     max-height: 100%;
     float: right;
-    border-radius: 50%; /* circular image */
-    border: 0.2em solid #000; /* black border */
+    border-radius: 50%;
+    border: 0.2em solid #000;
   }
   
  .pim-card header h2 {
     font-size: 1.5em;
     line-height: 2em;
-    color: #FF69B4; /* orange-yellow text */
+    color: #FF69B4;
   }
   
  .pim-card footer p {
     font-size: 1.125em;
     line-height: 2em;
-    color: #666; /* dark gray text */
+    color: #666;
   }
   
  .pim-card article p {
     padding-left: 1.25em;
-    color: #333; /* dark brown text */
+    color: #333;
   }
