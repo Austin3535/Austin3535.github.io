@@ -1,0 +1,107 @@
+.overlay {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 350px; /* adjust the width to your desired value */
+    max-width: 90%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: #FFFFFF; /* white text */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .team {
+    display: flex;
+    align-items: center;
+  }
+  
+  .team img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .team.usa {
+    color: #0000FF; /* blue text */
+  }
+  
+  .team.esp {
+    color: #FF0000; /* red text */
+  }
+  
+  .score {
+    font-size: 36px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .time {
+    font-size: 24px;
+    margin: 0 20px;
+  }
+
+  .overlay-kevin-durant {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF; /* white text */
+    background-color: rgba(0, 0, 0, 0.7); /* semi-transparent black background */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .overlay-kevin-durant .player-headshot {
+    width: 80px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .overlay-kevin-durant .player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .overlay-kevin-durant .player-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .overlay-kevin-durant .player-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .overlay-kevin-durant .player-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .overlay-kevin-durant .player-stats span {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0 10px;
+  }
+  
+  .overlay-kevin-durant .player-bio {
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }

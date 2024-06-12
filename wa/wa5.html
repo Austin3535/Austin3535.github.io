@@ -1,37 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Overlay Example</title>
-<style>
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2em;
-  z-index: 1;
-}
-
-.overlay-text {
-  /* Optional styling for the overlay text */
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlay Design</title>
+    <link rel="stylesheet" type="text/css" href="wa5-styles.css">
 </head>
 <body>
+    <!-- Add the overlay container -->
+    <div class="overlay">
+      <div class="team usa">
+        <img src="us-flag.webp" alt="USA Logo">
+        <span class="score">10</span>
+      </div>
+      <div class="time">Q1 05:21</div>
+      <div class="team esp">
+        <img src="spn-flag.png" alt="Spain Logo">
+        <span class="score">8</span>
+      </div>
+    </div>
 
-<img src="b-ball.png" alt="Your Image">
+    <!-- Add the background image or video here -->
+    <img src="b-ball.png" alt="Background Image">
 
-<div class="overlay">
-  <p class="overlay-text">Basketball Game!</p>
-</div>
-
+    <div class="overlay-kevin-durant">
+      <img src="kevin-durant.webp" class="player-headshot">
+      <div class="player-info">
+        <div class="player-name">Kevin Durant</div>
+        <div class="player-number">#7</div>
+        <div class="player-stats">
+          <span>PTS: 26</span>
+          <span>REB: 7</span>
+          <span>AST: 5</span>
+        </div>
+        <div class="player-bio">Small Forward, Team USA</div>
+      </div>
+    </div>
 </body>
 </html>
