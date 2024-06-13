@@ -61,7 +61,7 @@ nav a {
   object-fit: cover;
 }
 
-/* Media query for screens larger than 500px */
+
 @media (min-width: 500px) {
  .grid {
     display: flex;
@@ -100,7 +100,7 @@ nav a {
   }
 }
 
-/* Media query for screens smaller than 500px */
+
 @media (max-width: 499px) {
  .grid {
     display: flex;
