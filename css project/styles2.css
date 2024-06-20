@@ -1,0 +1,163 @@
+/* Global Styles */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2em;
+    padding: 2em;
+}
+
+section.concerts {
+    background-color: #fff;
+    padding: 1em;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+/* Mobile Styles (max-width: 400px) */
+
+@media (max-width: 400px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    section.concerts {
+        padding: 0.5em;
+    }
+    h1 {
+        font-size: 1.2em;
+    }
+    h2 {
+        font-size: 1em;
+    }
+}
+
+/* Laptop Styles (min-width: 1500px) */
+
+@media (min-width: 1500px) {
+    main {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4em;
+    }
+    section.concerts {
+        padding: 2em;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+}
+
+/* Global Styles */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+.banner {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* Add this to make the text visible */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add this to make the text more readable */
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.intro {
+    padding: 2em;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.intro h1 {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #333; /* Add this to make the title more visible */
+}
+
+.intro p {
+    margin-bottom: 1em;
+    color: #666; /* Add this to make the text more readable */
+}
+
+/* Mobile Styles (max-width: 400px) */
+
+@media (max-width: 400px) {
+   .banner {
+        height: 150px;
+    }
+   .intro {
+        padding: 1em;
+    }
+}
+
+/* Laptop Styles (min-width: 1500px) */
+
+@media (min-width: 1500px) {
+   .banner {
+        height: 300px;
+    }
+   .intro {
+        padding: 3em;
+    }
+}
