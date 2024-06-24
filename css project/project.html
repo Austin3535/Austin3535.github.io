@@ -83,18 +83,14 @@ header {
 /* Main Styles */
 
 main {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2em;
   padding: 2em;
 }
 
 /* Concerts Styles */
 
 section.concerts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2em;
   max-width: 2200px;
   margin: 40px auto;
@@ -109,9 +105,6 @@ section.concert {
   padding: 20px;
   border: 1px solid #ddd;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
 }
 
 section.concert h2 {
@@ -127,11 +120,9 @@ section.concert p {
 
 /* Media Queries */
 
-@media (max-width: 400px) {
-  main {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1200px) {
   section.concerts {
+    grid-template-columns: 1fr;
     padding: 0.5em;
   }
   h1 {
@@ -148,26 +139,9 @@ section.concert p {
   }
 }
 
-
-@media (min-width: 2500px) {
-  main {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4em;
-  }
+@media (min-width: 1201px) {
   section.concerts {
-    padding: 2em;
-  }
-  h1 {
-    font-size: 2em;
-  }
-  h2 {
-    font-size: 1.5em;
-  }
-  .banner {
-    height: 300px;
-  }
-  .intro {
-    padding: 3em;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
     </style>
