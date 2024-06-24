@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Silly story generator</title>
+
+
+    <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffe57f; /* light yellow background */
+  width: 350px;
+  margin: 20px auto; /* center the content */
+  padding: 20px;
+  border: 2px solid #ff7043; /* orangey-red border */
+  border-radius: 10px; /* rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* subtle shadow */
+}
+
+header h1 {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 2em;
+  color: #ff6f00; /* dark orange text */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  color: #ff6f00; /* dark orange text */
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 150px;
+  border: 2px solid #ff7043; /* orangey-red border */
+  border-radius: 5px;
+  background-color: #e1f5fe; /* light blue background */
+}
+
+input[type="radio"] {
+  margin: 0 10px;
+}
+
+button.randomize {
+  background-color: #4caf50; /* green button */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.randomize:hover {
+  background-color: #388e3c; /* darker green on hover */
+}
+
+p.story {
+  background-color: lightskyblue; /* light blue background */
+  padding: 10px;
+  border: 2px solid #ff7043; /* orangey-red border */
+  border-radius: 10px;
+  visibility: hidden;
+  font-family: "Comic Sans MS", cursive; /* Comic Sans font */
+}
+
+p.story.visible {
+  visibility: visible;
+}
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Smiling Friends Scripts</h1>
+    </header>
+    <div>
+      <label for="customname">Enter custom name:</label>
+      <input id="customname" type="text" placeholder="" />
+    </div>
+    <div>
+      <label for="us">US</label>
+      <input id="us" type="radio" name="ukus" value="us" checked />
+      <label for="uk">UK</label>
+      <input id="uk" type="radio" name="ukus" value="uk" />
+    </div>
+    <div>
+      <button class="randomize">Generate random story</button>
+    </div>
+    <!-- Thanks a lot to Willy Aguirre for his help with the code for this assessment -->
+    <p class="story"></p>
+
+    <script>
+      const customName = document.getElementById('customname');
+      const randomize = document.querySelector('.randomize');
+      const story = document.querySelector('.story');
+
+      function randomValueFromArray(array) {
+        const random = Math.floor(Math.random() * array.length);
+        return array[random];
+      }
+
+      const names = ['Willy the Goblin', 'Big Daddy', 'Father Christmas'];
+      const places = ['the soup kitchen', 'Disneyland', 'the White House'];
+      const actions = ['spontaneously combusted', 'melted into a puddle on the sidewalk', 'turned into a slug and crawled away'];
+
+      randomize.addEventListener('click', result);
+
+      function result() {
+        let name = 'Bob';
+        if (customName.value !== '') {
+          name = customName.value;
+        }
+
+        let weight = '300 pounds';
+        let temperature = '94 fahrenheit';
+        if (document.getElementById("uk").checked) {
+          weight = `${Math.round(300 / 14)} stone`;
+          temperature = `${Math.round((94 - 32) * 5 / 9)} degrees celsius`;
+        }
+
+        const insertX = randomValueFromArray(names);
+        const insertY = randomValueFromArray(places);
+        const insertZ = randomValueFromArray(actions);
+
+        const storyText = `It was ${temperature} outside, so ${insertX} went for a walk. When they got to ${insertY}, they stared in horror for a few moments, then ${insertZ}. ${name} saw the whole thing, but was not surprised — ${insertX} weighs ${weight}, and it was a hot day.`;
+
+        story.textContent = storyText;
+        story.style.visibility = 'visible';
+      }
+    </script>
+  </body>
+</html>
