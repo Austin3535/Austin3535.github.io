@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width" />
 
     <title>Silly story generator</title>
-
-
     <style>
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffe57f; /* light yellow background */
+  background-color: #ffe57f; 
   width: 350px;
-  margin: 20px auto; /* center the content */
+  margin: 20px auto;
   padding: 20px;
-  border: 2px solid #ff7043; /* orangey-red border */
-  border-radius: 10px; /* rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* subtle shadow */
+  border: 2px solid #ff7043; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
 
 header h1 {
   font-family: 'Comic Sans MS', cursive, sans-serif;
   font-size: 2em;
-  color: #ff6f00; /* dark orange text */
+  color: #ff6f00; 
   text-align: center;
   margin-bottom: 20px;
 }
@@ -31,15 +29,15 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
-  color: #ff6f00; /* dark orange text */
+  color: #ff6f00; 
 }
 
 input[type="text"] {
   padding: 10px;
   width: 150px;
-  border: 2px solid #ff7043; /* orangey-red border */
+  border: 2px solid #ff7043; 
   border-radius: 5px;
-  background-color: #e1f5fe; /* light blue background */
+  background-color: #b1daed;
 }
 
 input[type="radio"] {
@@ -47,7 +45,7 @@ input[type="radio"] {
 }
 
 button.randomize {
-  background-color: #4caf50; /* green button */
+  background-color: #4caf50;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -56,18 +54,17 @@ button.randomize {
 }
 
 button.randomize:hover {
-  background-color: #388e3c; /* darker green on hover */
+  background-color: #388e3c; 
 }
 
 p.story {
-  background-color: lightskyblue; /* light blue background */
+  background-color: lightskyblue;
   padding: 10px;
-  border: 2px solid #ff7043; /* orangey-red border */
+  border: 2px solid #ff7043;
   border-radius: 10px;
   visibility: hidden;
-  font-family: "Comic Sans MS", cursive; /* Comic Sans font */
+  font-family: "Comic Sans MS", cursive;
 }
-
 p.story.visible {
   visibility: visible;
 }
@@ -104,9 +101,9 @@ p.story.visible {
         return array[random];
       }
 
-      const names = ['Willy the Goblin', 'Big Daddy', 'Father Christmas'];
-      const places = ['the soup kitchen', 'Disneyland', 'the White House'];
-      const actions = ['spontaneously combusted', 'melted into a puddle on the sidewalk', 'turned into a slug and crawled away'];
+      const names = ['Charlie', 'Pim', 'Alan', 'Glep', 'Mr. Boss'];
+      const places = ['the office', 'the forest', 'the local cafe', 'a strange dimension', 'a client\'s house'];
+      const actions = ['was abducted by aliens', 'exploded in a burst of confetti', 'fell into a bottomless pit'];
 
       randomize.addEventListener('click', result);
 
