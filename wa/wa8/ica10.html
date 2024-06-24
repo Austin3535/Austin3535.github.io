@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/week7.css">
+    <title>Dance Like Nav</title>
+</head>
+<body>
+    <h1>Interactive Elements</h1>
+    <div id="red-ball">
+    </div>
+    <nav>
+        <a>Home</a>
+        <a>About</a>
+        <a>Projects</a>
+        <a>More</a>
+        <a>Socials</a>
+    </nav>
+    <img src="img/Charlie.webp" id="image-to-change">
+    
+    <select id="image-select">
+        <option value="img/Charlie.webp">Charlie</option>
+        <option value="img/Pim2.webp">Pim</option>
+    </select>
+    
+    <button id="change-bg-btn">Change Background Color</button>
+        
+    <script>
+        document.getElementById("change-bg-btn").addEventListener("click", function() {
+            document.body.style.background = getRandomColor();
+        });
+        
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+                var image = document.getElementById("image-to-change");
+        var select = document.getElementById("image-select");
+        
+        select.addEventListener("change", function() {
+            image.src = this.value;
+        });
+    </script>
+</body>
+</html>
