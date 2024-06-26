@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/week7.css">
+    <title>Dance Like Nav</title>
+    <style>
+      /* Add some basic styling to our message box */
+     .msgBox {
+        position: absolute;
+        top: 50%; /* Changed to 50% to make room for multiple messages */
+        left: 0;
+        transform: translate(0, -50%);
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 242px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+     .msgBox p {
+        margin: 0;
+        padding-left: 82px;
+        background-position: 25px center;
+        background-repeat: no-repeat;
+      }
+    </style>
+</head>
+<body>
+    <h1>ICA11</h1>
+    <div id="red-ball">
+    </div>
+    <nav>
+        <a>Home</a>
+        <a>About</a>
+        <a>Projects</a>
+        <a>More</a>
+        <a>Socials</a>
+    </nav>
+    <img src="img/Charlie.webp" id="image-to-change">
+    
+    <select id="image-select">
+        <option value="img/Charlie.webp">Charlie</option>
+        <option value="img/Pim2.webp">Pim</option>
+    </select>
+    
+    <button id="change-bg-btn">Change Background Color</button>
+    <button id="display-msg-btn">Display Message</button>
+        
+    <script>
+        document.getElementById("change-bg-btn").addEventListener("click", function() {
+            document.body.style.background = getRandomColor();
+        });
+        
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        var image = document.getElementById("image-to-change");
+        var select = document.getElementById("image-select");
+        
+        select.addEventListener("change", function() {
+            image.src = this.value;
+        });
+        
+        function displayMessage() {
+            const body = document.body;
+
+            const panel = document.createElement("div");
+            panel.setAttribute("class", "msgBox");
+            body.appendChild(panel);
+
+            const msg = document.createElement("p");
+            const messages = [
+                "Hey, what's up?",
+                "Smiling friends are the best!",
+                "Life is better with friends!",
+                "Friends make life more fun!",
+                "Smile, you're with friends!",
+            ];
+            msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+            panel.appendChild(msg);
+
+            const closeBtn = document.createElement("button");
+            closeBtn.textContent = "x";
+            panel.appendChild(closeBtn);
+
+            closeBtn.addEventListener("click", () => panel.parentNode.removeChild(panel));
+
+            panel.style.top = Math.random() * 50 + 50 + "%";
+            panel.style.left = Math.random() * 80 + 10 + "%";
+            panel.style.backgroundColor = getRandomColor(); // Add a random background color to the message box
+        }
+        
+        document.getElementById("display-msg-btn").addEventListener("click", function() {
+            displayMessage();
+        });
+    </script>
+</body>
+</html>
