@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/week7.css">
+    <title>Dance Like Nav</title>
+    <style>
+     
+     .msgBox {
+        position: absolute;
+        top: 50%; 
+        left: 0;
+        transform: translate(0, -50%);
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 242px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+     .msgBox p {
+        margin: 0;
+        padding-left: 82px;
+        background-position: 25px center;
+        background-repeat: no-repeat;
+      }
+
+      /* Add this CSS for the carousel */
+      .carousel-container {
+        max-width: 800px;
+        margin: 40px auto;
+        position: relative;
+      }
+
+      .carousel-inner {
+        display: flex;
+        overflow: hidden;
+      }
+
+      .carousel-item {
+        display: none;
+        width: 100%;
+      }
+
+      .carousel-item.active {
+        display: block;
+      }
+
+      .carousel-item img {
+        width: 100%;
+        height: 300px; /* adjust the height as needed */
+        object-fit: cover;
+      }
+
+      .carousel-prev, .carousel-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .carousel-prev {
+        left: 10px;
+      }
+
+      .carousel-next {
+        right: 10px;
+      }
+    </style>
+</head>
+<body>
+    <h1>ICA11</h1>
+    <div id="red-ball">
+    </div>
+    <nav>
+        <a>Home</a>
+        <a>About</a>
+        <a>Projects</a>
+        <a>More</a>
+        <a>Socials</a>
+    </nav>
+    <img src="img/Charlie.webp" id="image-to-change">
+    
+    <select id="image-select">
+        <option value="img/Charlie.webp">Charlie</option>
+        <option value="img/Pim2.webp">Pim</option>
+    </select>
+    
+    <button id="change-bg-btn">Change Background Color</button>
+    <button id="display-msg-btn">Display Message</button>
+        
+    <script>
+        document.getElementById("change-bg-btn").addEventListener("click", function() {
+            document.body.style.background = getRandomColor();
+        });
+        
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        var image = document.getElementById("image-to-change");
+        var select = document.getElementById("image-select");
+        
+        select.addEventListener("change", function() {
+            image.src = this.value;
+        });
+        
+        function displayMessage() {
+            const body = document.body;
+
+            const panel = document.createElement("div");
+            panel.setAttribute("class", "msgBox");
+            body.appendChild(panel);
+
+            const msg = document.createElement("p");
+            const messages = [
+                "Hey, what's up?",
+                "Smiling friends are the best!",
+                "Life is better with friends!",
+                "Friends make life more fun!",
+                "Smile, you're with friends!",
+            ];
+            msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+            panel.appendChild(msg);
+
+            const closeBtn = document.createElement("button");
+            closeBtn.textContent = "x";
+            panel.appendChild(closeBtn);
+
+            closeBtn.addEventListener("click", () => panel.parentNode.removeChild(panel));
+
+            panel.style.top = Math.random() * 50 + 50 + "%";
+            panel.style.left = Math.random() * 80 + 10 + "%";
+            panel.style.backgroundColor = getRandomColor(); 
+        }
+        
+        document.getElementById("display-msg-btn").addEventListener("click", function() {
+            displayMessage();
+        });
+    </script>
+
+    <!-- Add the carousel HTML here -->
+    <div class="carousel-container">
+      <div class="carousel-inner">
+        <!-- Dynamically generate carousel items -->
+      </div>
+      <button class="carousel-prev">Prev</button>
+      <button class="carousel-next">Next</button>
+    </div>
+
+    <script>
+      // Declaring the array of image filenames
+      const imageFilenames = ['pic1.jpeg', 'pic2.jpeg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+
+      // Declaring the alternative text for each image file
+      const altTexts = {
+        'pic1.jpeg': 'Closeup of a blue human eye',
+        'pic2.jpeg': 'Closeup of a green human eye',
+        'pic3.jpg': 'Closeup of a yellow human eye',
+        'pic4.jpg': 'Closeup of a red human eye',
+        'pic5.jpg': 'Closeup of a purple human eye',
+      };
+
+      // Dynamically generate carousel items
+      const carouselInner = document.querySelector('.carousel-inner');
+      imageFilenames.forEach((filename, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+        if (index === 0) {
+          carouselItem.classList.add('active');
+        }
+        const img = document.createElement('img');
+        img.src = `img/${filename}`;
+        img.alt = altTexts[filename];
+        carouselItem.appendChild(img);
+        carouselInner.appendChild(carouselItem);
+      });
+
+      // Add the carousel JavaScript here
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const carouselPrev = document.querySelector('.carousel-prev');
+      const carouselNext = document.querySelector('.carousel-next');
+
+      let currentIndex = 0;
+
+      carouselPrev.addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+          currentIndex = carouselItems.length - 1;
+        }
+        updateCarousel();
+      });
+
+      carouselNext.addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex >= carouselItems.length) {
+          currentIndex = 0;
+        }
+        updateCarousel();
+      });
+
+      function updateCarousel() {
+        carouselItems.forEach((item, index) => {
+          item.classList.remove('active');
+          if (index === currentIndex) {
+            item.classList.add('active');
+          }
+        });
+      }
+    </script>
+</body>
+</html>
