@@ -1,0 +1,46 @@
+/* CSS (in pokemon.css file) */
+.pokemon-bg {
+    background-image: url('pokemon-bg.jpg');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokeball {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+}
+
+.pokemon-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-btn {
+    background-color: #ffd700;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.pokemon-btn:hover {
+    background-color: #ffc400;
+}
+
+.pokemon-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.pokemon-input:focus {
+    border-color: #666;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="wa12.css">
+    <title>Pokémon Trivia</title>
+</head>
+<body>
+    <div class="app">
+        <header>Pokémon Trivia</header>
+        <section class="quotes">
+          <div class="quote-text" id="js-question-text"></div>
+          <div class="quote-text" id="js-answer-text"></div>
+        </section>
+        <section class="controls" >
+          <button type="button" id="js-new-question" class="new-quote button">
+            Get a new question!
+          </button>
+          <button type="button" id="js-check-answer" class="twitter button">
+            Check my answer!
+          </button>
+          <!-- <a class="answer button" id="js-tweet" target="_blank" rel="noreferrer">Show me the details!</a> -->
+          <input type="text" id="js-user-answer" placeholder="Enter your answer">
+        </section>
+        <p>My extension provides an interactive answer box, allowing users to input their answers. This extensionis intended to promote user participation and engagement.</p>
+      </div>
+      <script>
+        const endpoint = 'https://pokeapi.co/api/v2/pokemon/';
+
+        document.querySelector('#js-new-question').addEventListener('click', getNewQuestion);
+        document.querySelector('#js-check-answer').addEventListener('click', checkAnswer);
+
+        let pokemonData = {};
+        let currentQuestion = '';
+
+        async function getNewQuestion() {
+          try {
+            const randomId = Math.floor(Math.random() * 809) + 1;
+            const response = await fetch(endpoint + randomId);
+            if (!response.ok) {
+              throw Error(response.statusText);
+            }
+            const json = await response.json();
+            console.log(json);
+            pokemonData = json;
+            currentQuestion = `What is the type of ${json.name}?`;
+            document.querySelector('#js-question-text').textContent = currentQuestion;
+            document.querySelector('#js-answer-text').textContent = '';
+            document.querySelector('#js-user-answer').value = '';
+          } catch (error) {
+            console.error(error);
+            alert('Failed to fetch new question');
+          }
+        }
+
+        function checkAnswer() {
+          const userAnswer = document.querySelector('#js-user-answer').value.toLowerCase();
+          const correctAnswer = pokemonData.types[0].type.name;
+          if (userAnswer === correctAnswer) {
+            document.querySelector('#js-answer-text').textContent = `Correct! The answer is indeed ${correctAnswer}.`;
+          } else {
+            document.querySelector('#js-answer-text').textContent = `Sorry, that's incorrect. The correct answer is ${correctAnswer}.`;
+          }
+        }
+
+        getNewQuestion();
+      </script>
+</body>
+</html>
