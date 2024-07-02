@@ -1,30 +1,36 @@
-const digitButtons = document.querySelectorAll('.digit-button');
-const submitButton = document.getElementById('submit-phone');
-let phoneNumber = '';
+let min = 0;
+let max = 9999999999;
 
-function generateRandomDigit() {
-  return Math.floor(Math.random() * 10);
-}
+while (true) {
+  let guess = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`);
+  console.log(`                                      Is your phone number ${guess}?`);
+  console.log(`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`);
 
-function displayRandomDigit(button) {
-  const digit = generateRandomDigit();
-  button.textContent = digit;
-  button.dataset.digit = digit;
-}
+  let correctDigits = parseInt(prompt("                                      How many digits are in the correct positions?"));
 
-digitButtons.forEach((button) => {
-  displayRandomDigit(button);
-  button.addEventListener('click', () => {
-    phoneNumber += button.dataset.digit;
-    displayRandomDigit(button);
-  });
-});
+  if (correctDigits === 10) {
+    console.log(`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`);
+    console.log(`                                      I guessed it! Your phone number is ${guess}`);
+    console.log(`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`);
+    break;
+  } else {
+    let newMin = min;
+    let newMax = max;
 
-submitButton.addEventListener('click', () => {
-  if (phoneNumber.length !== 10) {
-    alert('Invalid phone number!');
-    return;
+    for (let i = 0; i < 10; i++) {
+      let digit = Math.floor(guess / Math.pow(10, 9 - i)) % 10;
+      if (correctDigits > 0) {
+        newMin = Math.max(newMin, guess - (guess % Math.pow(10, 10 - i)) + digit * Math.pow(10, 9 - i));
+        newMax = Math.min(newMax, guess - (guess % Math.pow(10, 10 - i)) + digit * Math.pow(10, 9 - i) + Math.pow(10, 10 - i) - 1);
+        correctDigits--;
+      } else {
+        newMin = Math.max(newMin, guess - (guess % Math.pow(10, 10 - i)) + 0 * Math.pow(10, 9 - i));
+        newMax = Math.min(newMax, guess - (guess % Math.pow(10, 10 - i)) + 9 * Math.pow(10, 9 - i));
+      }
+    }
+
+    min = newMin;
+    max = newMax;
   }
-  console.log(`Phone number: ${phoneNumber}`);
-  // Do something with the phone number, like sending it to a server
-});
+}

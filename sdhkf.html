@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Guesses Phone Number (Game)</title>
+  <style>
+    /* Add some basic styling to make the game look nicer */
+    body {
+      font-family: Arial, sans-serif;
+    }
+   .main {
+      text-align: center;
+    }
+    #computerGuess {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    
+  <div class="main">
+    <p id="prompt">Think of a phone number between 100-000-0000 and 999-999-9999.</p>
+    <p id="computerGuess"></p>
+    <p id="results"></p>
+    <button id="higherButton">Higher</button>
+    <button id="lowerButton">Lower</button>
+    <button id="correctButton">Yes, that's correct!</button>
+  </div>
+
+  <script>
+    let phoneNumberToGuess; // the person's secret phone number
+    let minGuess = 1000000000; // minimum possible phone number
+    let maxGuess = 9999999999; // maximum possible phone number
+    let computerGuess; // the computer's current guess
+
+    let promptElement = document.querySelector("#prompt");
+    let computerGuessElement = document.querySelector("#computerGuess");
+    let resultsElement = document.querySelector("#results");
+    let higherButton = document.querySelector("#higherButton");
+    let lowerButton = document.querySelector("#lowerButton");
+    let correctButton = document.querySelector("#correctButton");
+
+    higherButton.addEventListener("click", () => {
+      minGuess = computerGuess + 1;
+      computerGuess = Math.floor((minGuess + maxGuess) / 2);
+      computerGuessElement.textContent = `Is This Your Number: ${formatPhoneNumber(computerGuess)}`;
+    }, false);
+
+    lowerButton.addEventListener("click", () => {
+      maxGuess = computerGuess - 1;
+      computerGuess = Math.floor((minGuess + maxGuess) / 2);
+      computerGuessElement.textContent = `Is This Your Number: ${formatPhoneNumber(computerGuess)}`;
+    }, false);
+
+    correctButton.addEventListener("click", () => {
+      resultsElement.textContent = `Yay! The computer finally guessed it! You must be impressed! The correct answer was ${formatPhoneNumber(computerGuess)}.`;
+    }, false);
+
+    computerGuess = Math.floor((minGuess + maxGuess) / 2); // initial guess
+    computerGuessElement.textContent = `Is This Your Number: ${formatPhoneNumber(computerGuess)}`;
+
+    // Function to format phone numbers as xxx-xxx-xxxx
+    function formatPhoneNumber(phoneNumber) {
+      let phoneNumberString = phoneNumber.toString();
+      let formattedPhoneNumber = `${phoneNumberString.slice(0, 3)}-${phoneNumberString.slice(3, 6)}-${phoneNumberString.slice(6, 10)}`;
+      return formattedPhoneNumber;
+    }
+  </script>
 </body>
 </html>

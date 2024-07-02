@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Number Input</title>
+  <style>
+    .number-button {
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    .number-button:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter Your Phone Number</h1>
+  <div id="phone-number-display"></div>
+  <div id="number-buttons-container"></div>
+
+  <script>
+    const phoneNumberDisplay = document.getElementById('phone-number-display');
+    const numberButtonsContainer = document.getElementById('number-buttons-container');
+    let phoneNumber = '';
+
+    // Create number buttons
+    for (let i = 0; i < 10; i++) {
+      const button = document.createElement('button');
+      button.className = 'number-button';
+      button.textContent = i;
+      button.addEventListener('click', () => {
+        phoneNumber += i;
+        phoneNumberDisplay.textContent = phoneNumber;
+        if (phoneNumber.length === 10) {
+          alert(`Phone number: ${phoneNumber}`);
+          // Do something with the phone number, like sending it to a server
+        }
+      });
+      numberButtonsContainer.appendChild(button);
+    }
+  </script>
+</body>
+</html>
