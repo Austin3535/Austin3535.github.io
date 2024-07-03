@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Sign-in</title>
+  <style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #325269;
+  }
+  canvas#bouncing-balls-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+  .container {
+    max-width: 600px; /* Increased from 400px to 600px */
+    margin: 40px auto;
+    padding: 30px; /* Increased from 20px to 30px */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+  }
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 36px;
+    margin-top: 0;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .form-group input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
+  .form-group button[type="button"] {
+    width: 100%;
+    height: 40px;
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .form-group button[type="button"]:hover {
+    background-color: #3e8e41;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  #computerGuess {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00698f;
+    margin-bottom: 20px;
+    transition: opacity 0.5s;
+  }
+  #computerGuess.new-guess {
+    opacity: 0;
+    animation: fade-in 0.5s forwards;
+  }
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+  #results {
+    font-size: 18px;
+    color: #008000;
+  }
+  #timer {
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #ff0000;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Account Sign-in</h1>
+    </div>
+    <div class="form-group">
+      <p id="computerGuess"></p>
+    </div>
+    <div class="form-group">
+      <button id="higherButton">Higher</button>
+    </div>
+    <div class="form-group">
+      <button id="lowerButton">Lower</button>
+    </div>
+    <div class="form-group">
+      <button id="correctButton">Enter</button>
+    </div>
+    <div class="form-group">
+      <p id="results"></p>
+    </div>
+    <div class="form-group">
+      <p id="timer">Time remaining: 60 seconds</p>
+    </div>
+  </div>
+</body>
+<canvas id="bouncing-balls-canvas"></canvas>
+  <script>
+let phoneNumberToGuess;
+let minGuess = 1000000000; 
+let maxGuess = 9999999999;
+let computerGuess; 
+
+let computerGuessElement = document.querySelector("#computerGuess");
+let resultsElement = document.querySelector("#results");
+let higherButton = document.querySelector("#higherButton");
+let lowerButton = document.querySelector("#lowerButton");
+let correctButton = document.querySelector("#correctButton");
+let timerElement = document.querySelector("#timer");
+
+let min = 1;
+let sec = 0;
+let timerInterval = setInterval(function() {
+  if (sec === 0) {
+    min--;
+    sec = 59;
+  } else {
+    sec--;
+  }
+  timerElement.textContent = `Time remaining: ${min} minute${min === 1? '' : 's'} and ${sec} second${sec === 1? '' : 's'}`;
+  if (min === 0 && sec === 0) {
+    clearInterval(timerInterval);
+    alert("Time's up! Game restarting...");
+    location.reload();
+  }
+}, 1000);
+
+higherButton.addEventListener("click", () => {
+  minGuess = computerGuess + 1;
+  computerGuess = Math.floor((minGuess + maxGuess) / 2);
+  computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+  computerGuessElement.classList.add("new-guess");
+  setTimeout(() => {
+    computerGuessElement.classList.remove("new-guess");
+  }, 500);
+}, false);
+
+lowerButton.addEventListener("click", () => {
+  maxGuess = computerGuess - 1;
+  computerGuess = Math.floor((minGuess + maxGuess) / 2);
+  computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+  computerGuessElement.classList.add("new-guess");
+  setTimeout(() => {
+    computerGuessElement.classList.remove("new-guess");
+  }, 500);
+}, false);
+
+correctButton.addEventListener("click", () => {
+  resultsElement.textContent = `Entered! Your phone number is ${formatPhoneNumber(computerGuess)}.`;
+  clearInterval(timerInterval);
+}, false);
+
+computerGuess = Math.floor((minGuess + maxGuess) / 2);
+computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+
+function formatPhoneNumber(phoneNumber) {
+  let phoneNumberString = phoneNumber.toString();
+  let formattedPhoneNumber = `${phoneNumberString.slice(0, 3)}-${phoneNumberString.slice(3, 6)}-${phoneNumberString.slice(6, 10)}`;
+  return formattedPhoneNumber;
+}
+
+// get the canvas element
+var canvas = document.getElementById('bouncing-balls-canvas');
+var ctx = canvas.getContext('2d');
+
+// set the canvas dimensions
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// define the bouncing balls animation
+function Ball(x, y, vx, vy, radius, color) {
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
+  this.radius = radius;
+  this.color = color;
+}
+
+Ball.prototype.draw = function() {
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+  ctx.fillStyle = this.color;
+  ctx.fill();
+};
+
+Ball.prototype.update = function() {
+  this.x += this.vx;
+  this.y += this.vy;
+  
+  if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+    this.vx = -this.vx;
+  }
+  if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+    this.vy = -this.vy;
+  }
+};
+
+var balls = [];
+
+for (var i = 0; i < 100; i++) {
+  var x = Math.random() * canvas.width;
+  var y = Math.random() * canvas.height;
+  var vx = Math.random() * 2 - 1;
+  var vy = Math.random() * 2 - 1;
+  var radius = Math.random() * 10 + 5;
+  var color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+  balls.push(new Ball(x, y, vx, vy, radius, color));
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  for (var i = 0; i < balls.length; i++) {
+    balls[i].update();
+    balls[i].draw();
+  }
+  
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+  </script>
+</body>
+</html>
