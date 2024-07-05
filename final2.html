@@ -117,14 +117,16 @@
       <button id="correctButton">Enter</button>
     </div>
     <div class="form-group">
+      <button id="resetButton">Reset</button>
+    </div>
+    <div class="form-group">
       <p id="results"></p>
     </div>
     <div class="form-group">
-      <p id="timer">Time remaining: 60 seconds</p>
+      <p id="timer"></p>
     </div>
   </div>
-</body>
-<canvas id="bouncing-balls-canvas"></canvas>
+  <canvas id="bouncing-balls-canvas"></canvas>
   <script>
 let phoneNumberToGuess;
 let minGuess = 1000000000; 
@@ -135,6 +137,8 @@ let computerGuessElement = document.querySelector("#computerGuess");
 let resultsElement = document.querySelector("#results");
 let higherButton = document.querySelector("#higherButton");
 let lowerButton = document.querySelector("#lowerButton");
+let resetButton = document.querySelector("#resetButton");
+
 let correctButton = document.querySelector("#correctButton");
 let timerElement = document.querySelector("#timer");
 
@@ -150,10 +154,15 @@ let timerInterval = setInterval(function() {
   timerElement.textContent = `Time remaining: ${min} minute${min === 1? '' : 's'} and ${sec} second${sec === 1? '' : 's'}`;
   if (min === 0 && sec === 0) {
     clearInterval(timerInterval);
-    alert("Time's up! Game restarting...");
+    alert("Please enter phone number within time limt! Restarting...");
     location.reload();
   }
 }, 1000);
+
+
+resetButton.addEventListener("click", () => {
+  location.reload();
+}, false);
 
 higherButton.addEventListener("click", () => {
     minGuess = computerGuess + 1;
