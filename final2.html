@@ -20,9 +20,9 @@
   pointer-events: none;
 }
   .container {
-    max-width: 600px; /* Increased from 400px to 600px */
+    max-width: 600px;
     margin: 40px auto;
-    padding: 30px; /* Increased from 20px to 30px */
+    padding: 30px;
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -156,24 +156,36 @@ let timerInterval = setInterval(function() {
 }, 1000);
 
 higherButton.addEventListener("click", () => {
-  minGuess = computerGuess + 1;
-  computerGuess = Math.floor((minGuess + maxGuess) / 2);
-  computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
-  computerGuessElement.classList.add("new-guess");
-  setTimeout(() => {
-    computerGuessElement.classList.remove("new-guess");
-  }, 500);
-}, false);
+    minGuess = computerGuess + 1;
+    computerGuess = Math.floor((minGuess + maxGuess) / 2);
+    computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+    computerGuessElement.classList.add("new-guess");
+    setTimeout(() => {
+      computerGuessElement.classList.remove("new-guess");
+    }, 500);
+    swapButtons();
+  }, false);
 
-lowerButton.addEventListener("click", () => {
-  maxGuess = computerGuess - 1;
-  computerGuess = Math.floor((minGuess + maxGuess) / 2);
-  computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
-  computerGuessElement.classList.add("new-guess");
-  setTimeout(() => {
-    computerGuessElement.classList.remove("new-guess");
-  }, 500);
-}, false);
+  lowerButton.addEventListener("click", () => {
+    maxGuess = computerGuess - 1;
+    computerGuess = Math.floor((minGuess + maxGuess) / 2);
+    computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+    computerGuessElement.classList.add("new-guess");
+    setTimeout(() => {
+      computerGuessElement.classList.remove("new-guess");
+    }, 500);
+    swapButtons();
+  }, false);
+
+  function swapButtons() {
+    const higherButtonParent = higherButton.parentNode;
+    const lowerButtonParent = lowerButton.parentNode;
+    if (Math.random() < 0.5) {
+      higherButtonParent.appendChild(lowerButton);
+      lowerButtonParent.appendChild(higherButton);
+    }
+  }
+
 
 correctButton.addEventListener("click", () => {
   resultsElement.textContent = `Entered! Your phone number is ${formatPhoneNumber(computerGuess)}.`;
@@ -189,15 +201,12 @@ function formatPhoneNumber(phoneNumber) {
   return formattedPhoneNumber;
 }
 
-// get the canvas element
 var canvas = document.getElementById('bouncing-balls-canvas');
 var ctx = canvas.getContext('2d');
 
-// set the canvas dimensions
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// define the bouncing balls animation
 function Ball(x, y, vx, vy, radius, color) {
   this.x = x;
   this.y = y;

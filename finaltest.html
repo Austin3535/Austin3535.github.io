@@ -1,166 +1,274 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Bouncing balls</title>
-    <style>
-      html, body {
-    margin: 0;
-  }
-  
-  html {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    height: 100%;
-  }
-  
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Sign-in</title>
+  <style>
   body {
-    overflow: hidden;
-    height: inherit;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #325269;
+  }
+  canvas#bouncing-balls-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+  }
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 36px;
+    margin-top: 0;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .form-group input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
+  .form-group button[type="button"] {
+    width: 100%;
+    height: 40px;
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .form-group button[type="button"]:hover {
+    background-color: #3e8e41;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  #computerGuess {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00698f;
+    margin-bottom: 20px;
+    transition: opacity 0.5s;
+  }
+  #computerGuess.new-guess {
+    opacity: 0;
+    animation: fade-in 0.5s forwards;
+  }
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+  #results {
+    font-size: 18px;
+    color: #008000;
+  }
+  #timer {
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #ff0000;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Account Sign-in</h1>
+    </div>
+    <div class="form-group">
+      <p id="computerGuess"></p>
+    </div>
+    <div class="form-group">
+      <button id="higherButton">Higher</button>
+    </div>
+    <div class="form-group">
+      <button id="lowerButton">Lower</button>
+    </div>
+    <div class="form-group">
+      <button id="correctButton">Enter</button>
+    </div>
+    <div class="form-group">
+      <button id="resetButton">Reset</button>
+    </div>
+    <div class="form-group">
+      <p id="results"></p>
+    </div>
+    <div class="form-group">
+      <p id="timer"></p>
+    </div>
+  </div>
+  <canvas id="bouncing-balls-canvas"></canvas>
+  <script>
+let phoneNumberToGuess;
+let minGuess = 1000000000; 
+let maxGuess = 9999999999;
+let computerGuess; 
+
+let computerGuessElement = document.querySelector("#computerGuess");
+let resultsElement = document.querySelector("#results");
+let higherButton = document.querySelector("#higherButton");
+let lowerButton = document.querySelector("#lowerButton");
+let resetButton = document.querySelector("#resetButton");
+
+let correctButton = document.querySelector("#correctButton");
+let timerElement = document.querySelector("#timer");
+
+let min = 1;
+let sec = 0;
+let timerInterval = setInterval(function() {
+  if (sec === 0) {
+    min--;
+    sec = 59;
+  } else {
+    sec--;
+  }
+  timerElement.textContent = `Time remaining: ${min} minute${min === 1? '' : 's'} and ${sec} second${sec === 1? '' : 's'}`;
+  if (min === 0 && sec === 0) {
+    clearInterval(timerInterval);
+    alert("Time's up! Game restarting...");
+    location.reload();
+  }
+}, 1000);
+
+
+resetButton.addEventListener("click", () => {
+  location.reload();
+}, false);
+
+higherButton.addEventListener("click", () => {
+    minGuess = computerGuess + 1;
+    computerGuess = Math.floor((minGuess + maxGuess) / 2);
+    computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+    computerGuessElement.classList.add("new-guess");
+    setTimeout(() => {
+      computerGuessElement.classList.remove("new-guess");
+    }, 500);
+    swapButtons();
+  }, false);
+
+  lowerButton.addEventListener("click", () => {
+    maxGuess = computerGuess - 1;
+    computerGuess = Math.floor((minGuess + maxGuess) / 2);
+    computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+    computerGuessElement.classList.add("new-guess");
+    setTimeout(() => {
+      computerGuessElement.classList.remove("new-guess");
+    }, 500);
+    swapButtons();
+  }, false);
+
+  function swapButtons() {
+    const higherButtonParent = higherButton.parentNode;
+    const lowerButtonParent = lowerButton.parentNode;
+    if (Math.random() < 0.5) {
+      higherButtonParent.appendChild(lowerButton);
+      lowerButtonParent.appendChild(higherButton);
+    }
+  }
+
+
+correctButton.addEventListener("click", () => {
+  resultsElement.textContent = `Entered! Your phone number is ${formatPhoneNumber(computerGuess)}.`;
+  clearInterval(timerInterval);
+}, false);
+
+computerGuess = Math.floor((minGuess + maxGuess) / 2);
+computerGuessElement.textContent = `Is This Your Phone Number: ${formatPhoneNumber(computerGuess)}`;
+
+function formatPhoneNumber(phoneNumber) {
+  let phoneNumberString = phoneNumber.toString();
+  let formattedPhoneNumber = `${phoneNumberString.slice(0, 3)}-${phoneNumberString.slice(3, 6)}-${phoneNumberString.slice(6, 10)}`;
+  return formattedPhoneNumber;
+}
+
+var canvas = document.getElementById('bouncing-balls-canvas');
+var ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function Ball(x, y, vx, vy, radius, color) {
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
+  this.radius = radius;
+  this.color = color;
+}
+
+Ball.prototype.draw = function() {
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+  ctx.fillStyle = this.color;
+  ctx.fill();
+};
+
+Ball.prototype.update = function() {
+  this.x += this.vx;
+  this.y += this.vy;
+  
+  if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+    this.vx = -this.vx;
+  }
+  if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+    this.vy = -this.vy;
+  }
+};
+
+var balls = [];
+
+for (var i = 0; i < 100; i++) {
+  var x = Math.random() * canvas.width;
+  var y = Math.random() * canvas.height;
+  var vx = Math.random() * 2 - 1;
+  var vy = Math.random() * 2 - 1;
+  var radius = Math.random() * 10 + 5;
+  var color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+  balls.push(new Ball(x, y, vx, vy, radius, color));
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  for (var i = 0; i < balls.length; i++) {
+    balls[i].update();
+    balls[i].draw();
   }
   
-  h1 {
-    font-size: 2rem;
-    letter-spacing: -1px;
-    position: absolute;
-    margin: 0;
-    top: -4px;
-    right: 5px;
-  
-    color: transparent;
-    text-shadow: 0 0 4px white;
-  }
-    </style>
-  </head>
-
-  <body>
-    <h1>bouncing balls</h1>
-    <canvas></canvas>
-
-    <form>
-        <label for="phone">Enter your phone number:</label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-        <button type="submit">Submit</button>
-      </form>
-
-    <script>
-
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
-const width = (canvas.width = window.innerWidth);
-const height = (canvas.height = window.innerHeight);
-
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  requestAnimationFrame(animate);
 }
 
+animate();
 
-function randomRGB() {
-  return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
-}
-
-class Ball {
-  constructor(x, y, velX, velY, color, size) {
-    this.x = x;
-    this.y = y;
-    this.velX = velX;
-    this.velY = velY;
-    this.color = color;
-    this.size = size;
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    ctx.fill();
-  }
-
-  update() {
-    if (this.x + this.size >= width) {
-      this.velX = -Math.abs(this.velX);
-    }
-
-    if (this.x - this.size <= 0) {
-      this.velX = Math.abs(this.velX);
-    }
-
-    if (this.y + this.size >= height) {
-      this.velY = -Math.abs(this.velY);
-    }
-
-    if (this.y - this.size <= 0) {
-      this.velY = Math.abs(this.velY);
-    }
-
-    this.x += this.velX;
-    this.y += this.velY;
-  }
-
-  collisionDetect() {
-  for (const ball of balls) {
-    if (!(this === ball)) {
-      const dx = this.x - ball.x;
-      const dy = this.y - ball.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      if (distance < this.size + ball.size) {
-        const normalX = dx / distance;
-        const normalY = dy / distance;
-
-        const tangentX = -normalY;
-        const tangentY = normalX;
-
-        const v1n = this.velX * normalX + this.velY * normalY;
-        const v1t = this.velX * tangentX + this.velY * tangentY;
-        const v2n = ball.velX * normalX + ball.velY * normalY;
-        const v2t = ball.velX * tangentX + ball.velY * tangentY;
-
-        const v1nAfter = (v1n * (this.size - ball.size) + 2 * ball.size * v2n) / (this.size + ball.size);
-        const v2nAfter = (v2n * (ball.size - this.size) + 2 * this.size * v1n) / (this.size + ball.size);
-
-        this.velX = v1nAfter * normalX + v1t * tangentX;
-        this.velY = v1nAfter * normalY + v1t * tangentY;
-        ball.velX = v2nAfter * normalX + v2t * tangentX;
-        ball.velY = v2nAfter * normalY + v2t * tangentY;
-      }
-    }
-  }
-}
-}
-
-const balls = [];
-
-while (balls.length < 25) {
-  const size = random(10, 20);
-  const ball = new Ball(
-    random(0 + size, width - size),
-    random(0 + size, height - size),
-    random(-7, 7),
-    random(-7, 7),
-    randomRGB(),
-    size
-  );
-
-  balls.push(ball);
-}
-
-function loop() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-  ctx.fillRect(0, 0, width, height);
-
-  for (const ball of balls) {
-    ball.draw();
-    ball.update();
-    ball.collisionDetect();
-  }
-
-  requestAnimationFrame(loop);
-}
-
-loop();  
-    </script>
-  </body>
+  </script>
+</body>
 </html>
